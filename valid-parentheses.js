@@ -18,44 +18,55 @@ Link: https://leetcode.com/problems/valid-parentheses/
  * @return {boolean}
  */
 const isValid = function(s) {
-    
-    if (!s) {
-        return true;
-    }
-  
-    const stack = [];
-    const map = {
-        '{': '}',
-        '[': ']',
-        '(': ')'
-    };
 
-    for (let i=0 ; i<s.length ; i++) {
-        const ch = s.charAt(i);
-        if (ch === '}' || ch === ']' || ch === ')') {
-            const poppedCh = stack.pop();
-            if ( ch !== map[poppedCh])  {
-                return false;
-            }
-        } else {
-            stack.push(ch);
-        }
-        
-    }
+  // Empty string
+  if (!s) {
+    return true;
+  }
+
+  // Declare a empty stack
+  const stack = []; 
+
+  // Create a map of open and closing symbols
+  const map = {
+    "{": "}",
+    "[": "]",
+    "(": ")"
+  };
+
+  // Iterate string
+  for (let i = 0; i < s.length; i++) {
+    const ch = s.charAt(i); // Take each character from the string
     
-    return stack.length === 0;
+    // When matches closing symbol
+    if (ch === "}" || ch === "]" || ch === ")") {
+      const poppedCh = stack.pop();
+      if (ch !== map[poppedCh]) {
+        return false;
+      }
+    } else { // Otherwise push into stack
+      stack.push(ch);
+    }
+  }
+
+  // Stack should be empty for valid string
+  return stack.length === 0;    
 };
 
-const test1 = "{}"; // true
-const test2 = "{([])}"; // true
-const test3 = "{[}"; // false
-const test4 = ""; // true
-const test5 = "(((((((()"; // false
-const test6 = "((()(())))"; // true
+// Tests
+function test() {
+  const test1 = "{}"; // true
+  const test2 = "{([])}"; // true
+  const test3 = "{[}"; // false
+  const test4 = ""; // true
+  const test5 = "(((((((()"; // false
+  const test6 = "((()(())))"; // true
 
-console.log(test1, isValid(test1)); // true
-console.log(test2, isValid(test2)); // true
-console.log(test3, isValid(test3)); // false
-console.log(test4, isValid(test4)); // true
-console.log(test5, isValid(test5)); // false
-console.log(test6, isValid(test6)); // true
+  console.log(test1, isValid(test1)); // true
+  console.log(test2, isValid(test2)); // true
+  console.log(test3, isValid(test3)); // false
+  console.log(test4, isValid(test4)); // true
+  console.log(test5, isValid(test5)); // false
+  console.log(test6, isValid(test6)); // true
+}
+test();
